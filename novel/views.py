@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.shortcuts import HttpResponse,render
+from django.shortcuts import HttpResponse,render,redirect
 from django.template import loader
 from . import models
 
@@ -34,11 +34,21 @@ def line3d():
     return line3d.render_embed()
 
 def host(request):
-    v1 = models.Host.objects.filter(nid__gt=0)
-    # v1 = models.Host.objects.filter(nid__gt=0).values('ip','port','bi__caption')
-    # print(v1)
-    for row in v1:
-        print(row.nid,row.hostname,row.ip,row.port,row.bi_id,row.bi.caption)
-        # print(row['ip'],row['port'],row['bi__caption'])
-    v2 = models.ChapterCopy.objects.using('dbnovel').filter(novelid__lt=2)
-    return render(request,'novel/host.html',{"v1":v1,"v2":v2})
+    if request.method =="GET":
+        v1 = models.Host.objects.filter(nid__gt=0)
+        # v1 = models.Host.objects.filter(nid__gt=0).values('ip','port','bi__caption')
+        # print(v1)
+        for row in v1:
+            print(row.nid,row.hostname,row.ip,row.port,row.bi_id,row.bi.caption)
+            # print(row['ip'],row['port'],row['bi__caption'])
+        v2 = models.ChapterCopy.objects.using('dbnovel').filter(novelid__lt=2)
+        v3 = models.Bussiness.objects.all()
+        return render(request,'novel/host.html',{"v1":v1,"v2":v2,"v3":v3})
+
+    elif request.method=="POST":
+        hostname = request.POST.get("hostname")
+        ipname = request.POST.get("ipname")
+        portname = request.POST.get("portname")
+        bu_id = request.POST.get("bu_id")
+        models.Host.objects.create(hostname=hostname , ip = ipname , port=portname, bi_id = bu_id)
+        return redirect('/novel/host')

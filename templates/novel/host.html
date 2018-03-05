@@ -35,31 +35,33 @@
         </tr>
     </tbody>
 </table>
-
-<table>
-    <thead>
-        <tr>
-            <th>小说ID</th>
-            <th>章节ID</th>
-            <th>小说章节</th>
+{##}
+{#<table>#}
+{#    <thead>#}
+{#        <tr>#}
+{#            <th>小说ID</th>#}
+{#            <th>章节ID</th>#}
+{#            <th>小说章节</th>#}
 {#            <th>内容</th>#}
-        </tr>
-    </thead>
-    <tbody>
-    {% for con in v2 %}
-    <tr nid = "">
-        <td>{{ con.novelid.novelid }}</td>
-        <td>{{ con.chapterid }}</td>
-        <td>{{ con.title }}</td>
+{#        </tr>#}
+{#    </thead>#}
+{#    <tbody>#}
+{#    {% for con in v2 %}#}
+{#    <tr nid = "">#}
+{#        <td>{{ con.novelid.novelid }}</td>#}
+{#        <td>{{ con.chapterid }}</td>#}
+{#        <td>{{ con.title }}</td>#}
 {#        <td>{{ con.content |safe }}</td>#}
-    {% endfor %}
-    </tr>
-
-    </tbody>
-</table>
+{#    {% endfor %}#}
+{#    </tr>#}
+{##}
+{#    </tbody>#}
+{#</table>#}
 
 <div class="shade_div hide"></div>
+
 <div class="add_modal hide">
+    <form method="post" action="host">
     <div class="group">
         <input type="text" placeholder="主机名" name="hostname">
     </div>
@@ -70,13 +72,22 @@
         <input type="text" placeholder="端口" name="portname">
     </div>
     <div class="group">
-        <select>
-            <option>普通员工</option>
-            <option>开发</option>
-            <option>运维</option>
-            <option>行政</option>
+        <select name="bu_id">
+{#            <option>普通员工</option>#}
+{#            <option>开发</option>#}
+{#            <option>运维</option>#}
+{#            <option>行政</option>#}
+            {% for op in v3 %}
+            <option value="{{ op.id }}">{{ op.caption }}</option>
+            {% endfor %}
         </select>
     </div>
+
+    <div>
+        <input type="submit" value="提交" />
+        <input id = "cancel" type="button" value="取消" />
+    </div>
+    </form>
 </div>
 
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
@@ -84,6 +95,10 @@
     $(function () {
         $('#add_host').click(function () {
             $('.shade_div,.add_modal').removeClass('hide');
+        });
+
+        $('#cancel').click(function () {
+            $('.shade_div,.add_modal').addClass('hide');
         })
     })
 
