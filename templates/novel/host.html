@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>host 页面</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/commons.css' %}">
+</head>
+<body>
+<div>
+    <input id="add_host" type="button" value="添加" />
+</div>
+<table border="1">
+    <thead>
+        <tr>
+           <th>序号</th>
+           <th>主机</th>
+           <th>IP</th>
+           <th>PORT</th>
+        </tr>
+    </thead>
+
+    <tbody >
+    {% for item in v1 %}
+        <tr >
+            <td>{{ item.nid }}</td>
+            <td>{{ item.hostname }}</td>
+            <td>{{ item.ip }}</td>
+            <td>{{ item.port }}</td>
+    {% endfor %}
+        </tr>
+    </tbody>
+</table>
+
+<table>
+    <thead>
+        <tr>
+            <th>小说ID</th>
+            <th>章节ID</th>
+            <th>小说章节</th>
+{#            <th>内容</th>#}
+        </tr>
+    </thead>
+    <tbody>
+    {% for con in v2 %}
+    <tr nid = "">
+        <td>{{ con.novelid.novelid }}</td>
+        <td>{{ con.chapterid }}</td>
+        <td>{{ con.title }}</td>
+{#        <td>{{ con.content |safe }}</td>#}
+    {% endfor %}
+    </tr>
+
+    </tbody>
+</table>
+
+<div class="shade_div hide"></div>
+<div class="add_modal hide"></div>
+
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script>
+    $(function () {
+        $('#add_host').click(function () {
+            $('.shade_div,.add_modal').removeClass('hide');
+        })
+    })
+
+</script>
+</body>
+</html>
