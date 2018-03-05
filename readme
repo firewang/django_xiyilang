@@ -1,0 +1,8 @@
+django_superuser:  xiyilang  / niuyi123
+dbnovel :
+'ENGINE':"django.db.backends.mysql",
+'NAME':'novel',
+'USER':'novel',
+'PASSWORD':"qiangzi()",
+'HOST':'mysql.litianqiang.com',
+"PORT":'7150',
