@@ -18,8 +18,15 @@ class Host(models.Model):
     port = models.IntegerField()
     bi = models.ForeignKey('Bussiness',models.DO_NOTHING,default='999')
 
+class Application(models.Model):
+    app_id = models.AutoField(primary_key=True)
+    app_name = models.CharField(max_length=32)
 
-
+class HostToApplication(models.Model):
+    hta_id = models.AutoField(primary_key=True,verbose_name='无意义主键')
+    nobj = models.ForeignKey('Host',models.DO_NOTHING,to_field='nid')
+    appobj = models.ForeignKey('Application',models.DO_NOTHING,to_field='app_id')
+    status = models.CharField(max_length=3,verbose_name='主机与应用关系状态',default='0')
 
 class ChapterCopy(models.Model):
     chapterid = models.IntegerField(primary_key=True)

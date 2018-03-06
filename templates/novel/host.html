@@ -19,18 +19,22 @@
            <th>PORT</th>
            <th>岗位序号</th>
            <th>岗位</th>
+           <th>操作</th>
         </tr>
     </thead>
 
     <tbody >
     {% for item in v1 %}
-        <tr >
-            <td>{{ item.nid }}</td>
+        <tr nid="{{ item.nid }}" biid="{{ item.bi_id }}">
+            <td>{{  forloop.counter }}</td>
             <td>{{ item.hostname }}</td>
             <td>{{ item.ip }}</td>
             <td>{{ item.port }}</td>
             <td>{{ item.bi_id }}</td>
             <td>{{ item.bi.caption }}</td>
+            <td>
+                <a></a>
+            </td>
     {% endfor %}
         </tr>
     </tbody>

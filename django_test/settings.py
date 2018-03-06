@@ -87,20 +87,20 @@ DATABASES = {
         'PASSWORD':"qiangzi()",
         'HOST':'mysql.litianqiang.com',
         "PORT":'7150',
+        'OPTIONS':{
+            "init_command":"SET sql_mode='STRICT_TRANS_TABLES'",
+        }
     }
 }
-# DATABASE_ROUTERS = ['django_test.database_router.DatabaseAppsRouter']
-# DATABASE_APPS_MAPPING = {
-#     # example:
-#     # 'app_name':'database_name',
-#     'novel':'db.sqlite3',
-#     'xiyilang': 'dbxiyilang',
-#
-#     'admin': 'db.sqlite3',
-#     'auth': 'db.sqlite3',
-#     'contenttypes': 'db.sqlite3',
-#     'sessions': 'db.sqlite3',
-# }
+"""
+Strict Mode功能说明
+不支持对not null字段插入null值
+不支持对自增长字段插入”值
+不支持text字段有默认值
+"""
+
+
+
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
