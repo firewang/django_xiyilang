@@ -61,7 +61,10 @@
 <div class="shade_div hide"></div>
 
 <div class="add_modal hide">
-    <form method="post" action="host">
+<!--正常form提交-->
+{#    <form method="post" action="host">#}
+<!--ajax提交-->
+    <form method="post" action="ajax_test">
     <div class="group">
         <input type="text" placeholder="主机名" name="hostname">
     </div>
@@ -85,7 +88,9 @@
 
     <div>
         <input type="submit" value="提交" />
+        <input type="button" id="ajax_button" value="ajax提交" >
         <input id = "cancel" type="button" value="取消" />
+        <span id="error_msg" style="color: red " ></span>
     </div>
     </form>
 </div>
@@ -99,6 +104,26 @@
 
         $('#cancel').click(function () {
             $('.shade_div,.add_modal').addClass('hide');
+        });
+        $('#ajax_button').click(function () {
+            $.ajax({
+                url:'/novel/ajax_test',
+                type:"post",
+                data:{"hostname":$("input[name='hostname']").val() ,"ipname":$("input[name='ipname']").val() ,"portname":$("input[name='portname']").val()
+                    ,"bu_id":$("select[name='bu_id']").val()}  ,
+                success: function(data) {
+                {# 将后台返回的字典ret_dic 反序列化为json对象#}
+                    var obj_rec = JSON.parse(data);
+                    if(obj_rec.status){
+{#                        如果后台成功，则刷新页面#}
+                        location.reload();
+                    }else{
+                        $("#error_msg").text(obj_rec.error_msg);
+                    }
+
+            }
+            })
+
         })
     })
 

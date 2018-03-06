@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.shortcuts import HttpResponse,render,redirect
 from django.template import loader
 from . import models
+import json
 
 
 def index(request):
@@ -52,3 +53,24 @@ def host(request):
         bu_id = request.POST.get("bu_id")
         models.Host.objects.create(hostname=hostname , ip = ipname , port=portname, bi_id = bu_id)
         return redirect('/novel/host')
+
+def ajax_test(request):
+    ret_dic = {"status":True ,"error_msg":None, "data_return":None}
+    try:
+        hostname = request.POST.get("hostname")
+        ipname = request.POST.get("ipname")
+        portname = request.POST.get("portname")
+        bu_id = request.POST.get("bu_id")
+        if hostname and ipname and portname:
+            models.Host.objects.create(hostname=hostname, ip=ipname, port=portname, bi_id=bu_id)
+            return  HttpResponse("OK")
+        else:
+            ret_dic['status'] = False
+            ret_dic['error_msg'] = '未知错误'
+    except Exception as e:
+        ret_dic['status'] = False
+        ret_dic['error_msg'] = "请求错误"
+    # 利用json将字典转化为字符串
+    finally:
+        return HttpResponse(json.dumps(ret_dic))
+

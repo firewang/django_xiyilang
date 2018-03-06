@@ -19,6 +19,7 @@ from . import views
 
 urlpatterns = [
     re_path(r'^$',views.index,name='index'),
-    re_path(r'^host$',views.host)
+    re_path(r'^host$',views.host),
+    re_path(r'^ajax_test$',views.ajax_test),
 
 ]
