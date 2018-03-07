@@ -5,6 +5,7 @@ from django.shortcuts import HttpResponse,render,redirect
 from django.template import loader
 from . import models
 import json
+from utils import pagination
 
 
 def index(request):
@@ -36,15 +37,20 @@ def line3d():
 
 def host(request):
     if request.method =="GET":
-        v1 = models.Host.objects.filter(nid__gt=0)
+        current_page = int(request.GET.get('p',1))
+        val = int(request.COOKIES.get('per_page_count',10))
+        v4 = models.Host.objects.filter(nid__gt=0)
+        page_obj = pagination.Page(current_page,len(v4),val)
+        data = v4[page_obj.start:page_obj.end]
+        page_str = page_obj.page_str("/novel/host/")
         # v1 = models.Host.objects.filter(nid__gt=0).values('ip','port','bi__caption')
         # print(v1)
-        for row in v1:
-            print(row.nid,row.hostname,row.ip,row.port,row.bi_id,row.bi.caption)
+        # for row in v1:
+        #     print(row.nid,row.hostname,row.ip,row.port,row.bi_id,row.bi.caption)
             # print(row['ip'],row['port'],row['bi__caption'])
         v2 = models.ChapterCopy.objects.using('dbnovel').filter(novelid__lt=2)
         v3 = models.Bussiness.objects.all()
-        return render(request,'novel/host.html',{"v1":v1,"v2":v2,"v3":v3})
+        return render(request,'novel/host.html',{"v1":data,"v2":v2,"v3":v3,'page_str': page_str})
 
     elif request.method=="POST":
         hostname = request.POST.get("hostname")

@@ -24,3 +24,18 @@
 .hide {
     display: none;
 }
+
+/*以下为分页栏的样式*/
+.page {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px;
+    text-decoration: underline;
+    /*background-color: red;*/
+}
+.active{
+    text-decoration: none;
+    /*text-decoration-color: red;*/
+    /*background-color: green;*/
+}
+/*以上为分页栏的样式*/
